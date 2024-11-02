@@ -22,7 +22,9 @@ app.use("/user",(req,res,next)=>{
   //if i do like this 2 reponses in 1 route then it will give error for the sencond response that's why because of response has already went through error is-- cannot set headers after they are sent to the client
   res.send("hitted the second route handler");
 }
-//if i put next in last route it will give error because it's finding the next handler
+//if i put next in last handler also it will give error because it's finding the next handler --error is cannot get user if any response will send if i will not give next() then it'll be in pending state
+//I can send all functions inside an array or i can put 2-3 handler into an array left will be left
+
 )
 
 app.listen(7777, () => console.log("connected"));
