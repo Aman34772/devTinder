@@ -23,3 +23,11 @@ install postman app and make a workspace and collection
 make a test api call
 
 make right logic to handle get ,post ,patch,delete API calls and test them on postman
+
+explore routing and use of ?,(),*,+ in the routes
+Use of regex
+
+use of regex in routes /a/, /.*fly$/
+reading the query params  in the routes
+
+//dynamic routes

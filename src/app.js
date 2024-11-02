@@ -2,24 +2,50 @@ const express = require("express");
 
 const app = express();
 
-app.use("/user", (req, res) => res.send("hahhahahahahaha"));
+//abc ,ac  here the optional thing either i can search this or that
+app.get("/ab?c", (req, res) =>
+  res.send({ firstName: "Akshay", lastName: "Saini" })
+);
+//abbbbbbc, abc  here it can be multiple b for + sign
+app.get("/ab+c", (req, res) =>
+  res.send({ firstName: "Akshay", lastName: "Saini" })
+);
+//abdskjhbejfgbc, abc could present anything in between a and c after b
+app.get("/ab*c", (req, res) =>
+  res.send({ firstName: "Akshay", lastName: "Saini" })
+);
 
+//here bc are optional
+app.get("/a(bc)?d", (req, res) =>
+  res.send({ firstName: "Akshay", lastName: "Saini" })
+);
+//And we can write regex as well over there instead of string if any of my path contains (a) it will work
+app.get("/a/", (req, res) =>
+  res.send({ firstName: "Akshay", lastName: "Saini" })
+);
 
-//this will only handle the GET call to /user
-app.get("/user", (req, res) => res.send("Hey user"));
-
-
-//this will match all the http method API calls to /test
-// app.use("/", (req, res) => {
-//     res.send("Namaste Akshay");
-// });
-
-app.post("/user",(req,res)=>{
-    //saving to the database
-    console.log("Hello jii save kr rha hu")
-    res.send("Hello to the database")
+//if i write * in starting that means i can write anything in startingand then it ends with a fly
+app.get(/.*fly$/, (req, res) => {
+  res.send({ firstName: "Akshay", lastName: "Saini" });
 });
-app.delete("/user",(req,res)=>res.send("deleted successfully"))
-app.use("/test", (req, res) => res.send("hello from the server"));
+//i can get query params by url by req.query
+app.get("/user", (req, res) => {
+  console.log(req.query);
+  res.send({ firstName: "Akshay", lastName: "Saini" });
+});
+
+//dynamic routing
+app.get("/user/:userId",(req,res)=>{
+    console.log(req.params);
+    res.send({firstName:"Akshay",lastName:"Saini"})
+})
+
+
+app.get("/user/:userId/:name/:password",(req,res)=>{
+    console.log(req.params);
+    res.send({firstName:"Akshay",lastName:"Saini"})
+})
+
+//these are the basic things we'll build on next some episodes
 
 app.listen(7777, () => console.log("connected"));
