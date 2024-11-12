@@ -2,29 +2,24 @@ const express = require("express");
 
 const app = express();
 
-// if i dont want to send multiple handler we can send from same route and other handler 
-app.get("/user",(req,res,next)=>{
-    console.log("Handling the route user!!");
-    next()
-},
-// i can define my route handler one by one here and can send response same route with other handler 
-//sequence of functions matter a lot
-("/user",(req,res)=>{
-    res.send("2nd route handler");
+//middleware comes first before any http method routes
+app.use("/",(req,res)=>{
+    // res.send("Handling the /route")
+    next();
+    //if i put next() here it ei;; gp through  the next handler
 })
-)
 
 
+//Get /users => it will go through the chain of middlewares then it will handle the response 
 app.get("/user",(req,res,next)=>{
-    console.log("first handler ")
-    res.send("dekh lo");
+    console.log("Handling /user route")
     next();
 },
-("/user",(req,res)=>{
-    res.send("second handler")
-})
+//route handlers are also called as a middleware because it comes in between
+(req,res,next)=>{
+    res.send("2nd Route Handler")
+}
 )
-
 
 
 

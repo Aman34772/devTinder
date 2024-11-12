@@ -38,3 +38,5 @@ Multiple Route Handlers - Play with the code
 next()
 next function and errors along with res.send()
 app.use("/route", rH, [rH2,rH3],rH4,rH5);
+read more about middlewares what is it
+How express JS basically handles requests behind the scenes
