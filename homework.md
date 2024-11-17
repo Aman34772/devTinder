@@ -38,5 +38,18 @@ Multiple Route Handlers - Play with the code
 next()
 next function and errors along with res.send()
 app.use("/route", rH, [rH2,rH3],rH4,rH5);
-read more about middlewares what is it
+read more about middlewares what is it and why do we need it
 How express JS basically handles requests behind the scenes
+
+http response status codes
+ informational responses (100-199)
+ Successful responses(200-299)
+ Redirection messages(300-399)
+ client error responses(400-499)
+ Server error responses(500-599)
+
+difference between app.use and app.all 
+write a dummy auth middleware for admin
+write a dummy auth middleware for all user routes,except /user/login
+
+error handling usigng app.use("/",(err,req,res,next)=>{});
