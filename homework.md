@@ -53,3 +53,12 @@ write a dummy auth middleware for admin
 write a dummy auth middleware for all user routes,except /user/login
 
 error handling usigng app.use("/",(err,req,res,next)=>{});
+
+Create a free cluster on mongodb official website (Mongodb ATLAS)
+Install mongoose library
+connect your application to the database "Connection-URL"/devTinder
+call the connectDb function and connect to the database before starting application on 7777
+
+Create a userSchema and userModel
+Create post /signup API to add data to database
+push some documents using API calls from postman
