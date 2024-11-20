@@ -88,3 +88,6 @@ Add API level validation on patch request and signup api
 Data sanitization -Add API validations for each fields --can save our api from malicious data from the users of hackers 
 Install validator
 Explore Use Validator library functions and use validator functions for password, email and photourl
+validate data in signup API
+Install bcrypt package
+Create a passwordHash using bcrypt.hash & save the user is encrypted password

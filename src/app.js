@@ -2,15 +2,29 @@ const express = require("express");
 const { connectDb } = require("./config/Database");
 const app = express();
 const dotenv = require("dotenv");
+var bcrypt = require('bcryptjs');
 const { User } = require("./models/user");
+const {validateSignupData} =require("./Utils/validation")
 dotenv.config();
 
 app.use(express.json());
 app.post("/userSignup", async (req, res) => {
+  try {
+  //validation of data
+  validateSignupData(req)
+
+
+  //Encrypt the password and then store the user into the database
+  const {firstName, lastName, emailId, password} = req.body;
+    const passwordHash = await bcrypt.hash(password, 10)
+    console.log(passwordHash);
+
+    
   //creating a new instances of the User model
   // console.log(req);
-  const user = new User(req.body);
-  try {
+  const user = new User({
+    firstName,lastName,emailId,password : passwordHash
+  });
     await user.save();
     res.send("User added successfully");
   } catch (error) {
