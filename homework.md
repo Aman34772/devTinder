@@ -70,3 +70,16 @@ User.findOne with duplicate email ids, which object returned
 
 API -  get user by email
 API- Feed API - GET/feed - get all the users from the database
+API- get user by ID
+Create a delete user API
+difference between patch and put
+API- Update an user
+Explore the Mongoose Documentationfor Model methods
+what are options in a model.findOneAndUpdate method, explore more about it
+API- Update the user with emailId
+explore schematype options from the documentation
+add required, unique, lowercase, min, minLength, trim
+Add default value 
+create a custom validate function for gender
+Improve the DB scema - Put all appropriate validations on each field in Schema
+Add timestamps to the schema
