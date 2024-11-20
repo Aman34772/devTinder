@@ -6,7 +6,7 @@ const { User } = require("./models/user");
 dotenv.config();
 
 app.use(express.json());
-app.post("/signup", async (req, res) => {
+app.post("/userSignup", async (req, res) => {
   //creating a new instances of the User model
   // console.log(req);
   const user = new User(req.body);
@@ -19,7 +19,7 @@ app.post("/signup", async (req, res) => {
 });
 
 //Feed API - Get /feed - get all the users from the database
-app.get("/feed", async (req, res) => {
+app.get("/getOneUser", async (req, res) => {
   const userEmail = req.body.emailId;
 
   try {
@@ -39,7 +39,7 @@ app.get("/feed", async (req, res) => {
   console.log(userData);
 });
 
-app.get("/feeds", async (req, res) => {
+app.get("/getAllUsers", async (req, res) => {
   const Users = await User.find({});
   try {
     res.send(Users);
@@ -49,7 +49,7 @@ app.get("/feeds", async (req, res) => {
 });
 
 //delete a user from the database
-app.delete("/delete", async (req, res) => {
+app.delete("/deletedUser", async (req, res) => {
   const userId = req.body.userId;
   try {
     console.log(userId);
@@ -63,18 +63,29 @@ app.delete("/delete", async (req, res) => {
 });
 
 //update data of the user
-app.patch("/patch", async (req, res, next) => {
+app.patch("/user/:userId", async (req, res, next) => {
   const data = req.body;
-  const userId = req.body.userId;
+  const userId = req.params?.userId;
   console.log(data);
   console.log(userId);
   try {
-    const user = await User.findByIdAndUpdate({ _id: userId }, data, {
-      returnDocument: "after",
-      runValidators: true,
-    });
-    console.log(user);
-    res.status(200).send("updated successfully");
+    const Allowed_Updates = [
+      "userId","photoUrl","about","gender","age","skills"
+    ]
+    
+    const isUpdateAllowed = Object.keys(data).every(k=>Allowed_Updates.includes(k))
+    if(!isUpdateAllowed){
+      throw new Error("update not allowed")
+    }
+    if(data?.skills >=10){
+      throw new Error("You can add upto 10 skills only");
+    }
+      const user = await User.findByIdAndUpdate({ _id: userId }, data, {
+        returnDocument: "after",
+        runValidators: true,
+      });
+      res.status(200).send("updated successfully");
+      console.log(user);
   } catch (error) {
     res.status(400).send("update failed: " + error.message);
   }
