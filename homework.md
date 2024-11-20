@@ -86,3 +86,5 @@ Add timestamps to the schema
 never ever trust on users data
 Add API level validation on patch request and signup api
 Data sanitization -Add API validations for each fields --can save our api from malicious data from the users of hackers 
+Install validator
+Explore Use Validator library functions and use validator functions for password, email and photourl
