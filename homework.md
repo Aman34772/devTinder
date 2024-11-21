@@ -91,3 +91,5 @@ Explore Use Validator library functions and use validator functions for password
 validate data in signup API
 Install bcrypt package
 Create a passwordHash using bcrypt.hash & save the user is encrypted password
+Create login API 
+Compare passwords and throw errors if email or password is invalid
