@@ -93,3 +93,13 @@ Install bcrypt package
 Create a passwordHash using bcrypt.hash & save the user is encrypted password
 Create login API 
 Compare passwords and throw errors if email or password is invalid
+
+
+when we say that cookie hijacking/cookie stealing if somebody steals my cookies i anybody stole my cookiei can just use the cookie to get all the api's of logged in users okay this is known as cookie hijacking **but any random attacker cannot steal your cookie untill they access to your computer or i write the javascript into the console to give the access tokens that's how authentication works on most of the websites almost all the websites which is on internet when i logged in never share your cookie with anyone
+
+install cookie-parser
+jwt send a dummy cookie to user
+create GET /profile API and check if you get the cookie back
+install jsonwebtoken
+In login api,after email and password validation, create a jwt token and send it to user inside the cookie
+read the cookies inside your profile API and find the logged in user
