@@ -117,3 +117,8 @@ create userSchema method to comparepassword(passwordInputByUser)
 - Create routes folder for managing auth, profile, requests routers
 - Create authRouter, profileRouter, requestRouter
 - Import these routers in app.js
+- Create POST /Logout API
+- Create PATCH /profile/edit
+- Create Patch /profile/password API=> forgot password API
+- Make You Validate all data in every POST,PATCH apis
+- Test all APIs 

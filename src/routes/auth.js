@@ -28,7 +28,7 @@ router.post("/userSignup", async (req, res) => {
     }
   });
 
-  router.post("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
       const { emailId, password } = req.body;
       // console.log(emailId);
@@ -54,6 +54,12 @@ router.post("/userSignup", async (req, res) => {
     } catch (error) {
       res.status(400).send("something went wrong " + error.message);
     }
-  });
+});
+router.post("/logout",async(req,res)=>{
+    //
+    res.cookie("token", null,{
+        expires:new Date(Date.now()),
+    }).send("Logged out successful")
+})
 
 module.exports = router;
