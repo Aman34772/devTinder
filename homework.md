@@ -122,3 +122,19 @@ create userSchema method to comparepassword(passwordInputByUser)
 - Create Patch /profile/password API=> forgot password API
 - Make You Validate all data in every POST,PATCH apis
 - Test all APIs 
+
+- Create Connection Request Schema 
+- Send Connection Request API
+- Proper Validation of Data
+- Think about all corner cases
+- Read $or query $and queries in mongoose
+- Schema.pre("Save") function
+- Read more about indexes in MongoDB
+- Why do we need index in DB?
+- What is the advantages and disadvantages of creating?
+
+- Read this article about compound indexes:  https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
+
+-ALWAYS THINK ABOUT CORNER CASES
+
+- write code with proper validations for POST /request/review/:review/:requestId

@@ -97,7 +97,7 @@ app.patch("/user/:userId", async (req, res, next) => {
 });
 
 
-
+//connecting and listening
 connectDb(process.env.url)
   .then(() => {
     console.log("MongoDb connected");
