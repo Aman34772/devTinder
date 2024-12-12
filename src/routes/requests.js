@@ -21,10 +21,10 @@ router.post(
       }
 
       const toUser = await User.findById(toUserId);
-      if(!toUser){
-        return res.status(404).json({message: "user not found!"})
+      if (!toUser) {
+        return res.status(404).json({ message: "user not found!" });
       }
-      
+
       //If there is an existing ConnectionRequest
       const existingConnectionRequest = await ConnectionRequest.findOne({
         $or: [
@@ -58,34 +58,38 @@ router.post(
   }
 );
 
-router.post("/request/review/:status/:requestId",userAuth,async(req,res)=>{
-  try {
-    const loggedInUser = req.user;
-    const {status,requestId} = req.params;
-    const allowedStatus =["accepted","rejected"];
-    if(!allowedStatus.includes(status)){
-      return res.status(400).json({message: "Status not allowed!"})
+router.post(
+  "/request/review/:status/:requestId",
+  userAuth,
+  async (req, res) => {
+    try {
+      const loggedInUser = req.user;
+      const { status, requestId } = req.params;
+      const allowedStatus = ["accepted", "rejected"];
+      if (!allowedStatus.includes(status)) {
+        return res.status(400).json({ message: "Status not allowed!" });
+      }
+      const connectionRequest = await connectionRequestModel.findOne({
+        _id: requestId,
+        toUserId: loggedInUser._id,
+        status: "interested",
+      });
+      if (!connectionRequest) {
+        return res
+          .status(404)
+          .json({ message: "connection request not found" });
+      }
+      connectionRequest.status = status;
+      const data = await connectionRequest.save();
+      res.json({ message: "connection request " + status, data });
+      //validate the status
+      //Akdhay =>ELON
+      //loggedInId == toUserId
+      //status = interested
+      //requestId should be valid
+    } catch (error) {
+      res.status(400).send("ERROR:" + error.message);
     }
-    const connectionRequest = await connectionRequestModel.findOne({
-      _id:requestId,
-      toUserId: loggedInUser._id,
-      status:"interested",
-    });
-    if(!connectionRequest){
-      return res.status(404).json({message:"connection request not found"});
-    }
-    connectionRequest.status = status;
-    const data = await connectionRequest.save();
-    res.json({message:"connection request "+ status, data});
-    //validate the status
-    //Akdhay =>ELON
-    //loggedInId == toUserId
-    //status = interested
-    //requestId should be valid
-
-  } catch (error) {
-    res.status(400).send("ERROR:" + error.message)
   }
-
-})
+);
 module.exports = router;

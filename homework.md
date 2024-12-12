@@ -138,3 +138,25 @@ create userSchema method to comparepassword(passwordInputByUser)
 -ALWAYS THINK ABOUT CORNER CASES
 
 - write code with proper validations for POST /request/review/:review/:requestId
+- Thought process - POST vs GET
+
+- Read about ref and populate https://mongoosejs.com/docs/populate.html
+- Create GET /user/requests/received with all checks (API )
+- Create GET  /user/connections
+
+- Logic for GET /feed API
+- Explore the $nin, $and ,$or , $ne and other query operators
+
+
+
+## Notes:
+- /feed/page=1limit=10 =>first 1-10 => .skip(0) & .limit(10)
+
+- /feed/page=2limit=20 => 11-20 => .skip(10) & .limit(10)
+
+- /feed/page=3limit=30 => 21-30 => .skip(20) & .limit(10)
+
+
+- .skip() & .limit()
+
+- skip = (page-1)*limit
