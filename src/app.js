@@ -1,24 +1,26 @@
 const express = require("express");
 const { connectDb } = require("./config/Database");
+const cors = require("cors");
 const app = express();
 const dotenv = require("dotenv");
 var cookieParser = require("cookie-parser");
 const { User } = require("./models/user");
 
 dotenv.config();
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
 
-const authRouter = require('./routes/auth');
-const profileRouter = require('./routes/profile');
-const requestRouter = require('./routes/requests');
+const authRouter = require("./routes/auth");
+const profileRouter = require("./routes/profile");
+const requestRouter = require("./routes/requests");
 const userRouter = require("./routes/user");
 
-app.use("/",authRouter);
-app.use("/",profileRouter);
-app.use("/",requestRouter);
-app.use("/",userRouter)
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", requestRouter);
+app.use("/", userRouter);
 
 //Feed API - Get /feed - get all the users from the database
 app.get("/getOneUser", async (req, res) => {
@@ -96,7 +98,6 @@ app.patch("/user/:userId", async (req, res, next) => {
     res.status(400).send("update failed: " + error.message);
   }
 });
-
 
 //connecting and listening
 connectDb(process.env.url)
