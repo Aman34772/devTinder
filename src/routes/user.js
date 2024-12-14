@@ -17,18 +17,21 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
         // }).populate("fromUserId", ["firstName","lastName"])
       })
       .populate("fromUserId", USER_SAFE_DATA);
-      
-      // res.send(connectionRequests);
-      res.json({ message: "data fetched successfully", data: connectionRequests });
-    } catch (error) {
-      req.statusCode(400).send("ERROR: " + error.message);
-    }                                   
-  });
-  
-  userRouter.get("/user/connections", userAuth, async (req, res) => {
-    try {
-      const loggedInUser = req.user;
-      const connectionRequests = await connectionRequestModel
+
+    // res.send(connectionRequests);
+    res.json({
+      message: "data fetched successfully",
+      data: connectionRequests,
+    });
+  } catch (error) {
+    req.statusCode(400).send("ERROR: " + error.message);
+  }
+});
+
+userRouter.get("/user/connections", userAuth, async (req, res) => {
+  try {
+    const loggedInUser = req.user;
+    const connectionRequests = await connectionRequestModel
       .find({
         $or: [
           {
@@ -43,14 +46,13 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
       })
       .populate("fromUserId", USER_SAFE_DATA)
       .populate("toUserId", USER_SAFE_DATA);
-      const data = connectionRequests.map(row => {
-        if (row?.fromUserId?._id.toString() === loggedInUser?._id.toString()) {
-          return row?.toUserId;
-        }else{
-          return row?.fromUserId;
-        }
-         
-      });
+    const data = connectionRequests.map((row) => {
+      if (row?.fromUserId?._id.toString() === loggedInUser?._id.toString()) {
+        return row?.toUserId;
+      } else {
+        return row?.fromUserId;
+      }
+    });
     res.json({ data });
     //Akshay => Elon
     //Elon => Mark    // ELON can be either fromUser or toUserId
@@ -59,7 +61,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   }
 });
 
-userRouter.get("/user/feed", userAuth, async (req, res) => {
+userRouter.get("/user/feed", async (req, res) => {
   try {
     //User should see all the user cards except
     // 0. his own card
@@ -73,8 +75,8 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
 
     const page = parseInt(req.query.page) || 1;
     let limit = parseInt(req.query.limit) || 10;
-    limit= limit >50? 50: limit;
-    const skip = (page-1)*limit;
+    limit = limit > 50 ? 50 : limit;
+    const skip = (page - 1) * limit;
     //Find all connectionRequests (sent + received)
     const connectionRequest = await connectionRequestModel
       .find({
@@ -88,20 +90,23 @@ userRouter.get("/user/feed", userAuth, async (req, res) => {
         ],
       })
       .select("fromUserId toUserId");
-      const hideUsersFromFeed = new Set();
-      connectionRequest.forEach((req) => {
-        hideUsersFromFeed.add(req?.fromUserId?.toString());
-        hideUsersFromFeed.add(req?.toUserId?.toString());
-      });
-      // console.log(hideUsersFromFeed);
-      // res.send(connectionRequest);
+    const hideUsersFromFeed = new Set();
+    connectionRequest.forEach((req) => {
+      hideUsersFromFeed.add(req?.fromUserId?.toString());
+      hideUsersFromFeed.add(req?.toUserId?.toString());
+    });
+    // console.log(hideUsersFromFeed);
+    // res.send(connectionRequest);
 
     const users = await User.find({
       $and: [
         { _id: { $nin: Array.from(hideUsersFromFeed) } },
         { _id: { $ne: loggedInUser._id } },
       ],
-    }).select(USER_SAFE_DATA).skip(skip).limit(limit);
+    })
+      .select(USER_SAFE_DATA)
+      .skip(skip)
+      .limit(limit);
     res.send(users);
   } catch (error) {
     res.status(400).json({ message: error.message });
