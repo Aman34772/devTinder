@@ -61,7 +61,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   }
 });
 
-userRouter.get("/user/feed", async (req, res) => {
+userRouter.get("/user/feed",userAuth, async (req, res) => {
   try {
     //User should see all the user cards except
     // 0. his own card
